@@ -17,6 +17,7 @@ var locationLattitude;
 var txtOutputLongitude = jQuery('.longitude');
 var txtOutputLattitude = jQuery('.lattitude');
 var txtOutputLocation = jQuery('.location');
+var map = jQuery('#map');
 
 //check if a valid input
 var numberRegex = /^[+-]?\d+(\.\d+)?([eE][+-]?\d+)?$/;
@@ -69,11 +70,10 @@ function exportPosition(latitude, longitude, zoom) {
     
  	//Use the url to get the location a user manually puts in.
     // Insert the google maps iframe and change the location using the variables returned from the API
-    jQuery('#map').html('<iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://maps.google.co.uk/?ie=UTF8&amp;ll='+latitude+','+longitude+'&amp;spn=0.332359,0.617294&amp;t=m&amp;z='+zoom+'&amp;output=embed"></iframe>');
-    jQuery('#map2').html('<img src="https://maps.googleapis.com/maps/api/staticmap?size=600x400&center='+latitude+','+longitude+'&zoom='+zoom+'&markers=color:yellow|'+latitude+','+longitude+'" />')
+    mapOutput.html('<iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://maps.google.co.uk/?ie=UTF8&amp;ll='+latitude+','+longitude+'&amp;spn=0.332359,0.617294&amp;t=m&amp;z='+zoom+'&amp;output=embed"></iframe>');
+    //jQuery('#map2').html('<img src="https://maps.googleapis.com/maps/api/staticmap?size=600x400&center='+latitude+','+longitude+'&zoom='+zoom+'&markers=color:yellow|'+latitude+','+longitude+'" />')
 
-    longitudediv.html('Longitude: '+longitude);
-    lattitudediv.html('Latitude: '+latitude);
+
     
     //Ajax function
     //Make a call to the Google maps api to get the name of the location
@@ -83,7 +83,7 @@ function exportPosition(latitude, longitude, zoom) {
       dataType: 'json',
       success: function(data) {
         //If Successful add the data to the 'location' div
-     locationdiv.html('Location: '+data.results[0].address_components[2].long_name);
+     	txtOutputLocation.html('Location: '+data.results[0].address_components[2].long_name);
       },
       error: function(xhr, textStatus, errorThrown) {
              errorPosition();
