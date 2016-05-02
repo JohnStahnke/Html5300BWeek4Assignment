@@ -45,10 +45,6 @@ button.click(function(e){
 			//if no data in manual search then get location from gps or ip
 			navigator.geolocation.getCurrentPosition(exportPosition, errorPosition);
 			//can I get the lattitude and longitude and set to a position?
-			latitude = position.coords.latitude;
-    		longitude  = position.coords.longitude;
-    		zoom = 11;
-    		exportPosition(longitude, lattitude, zoom)
 		}
 
 	}
@@ -63,15 +59,18 @@ function errorPosition() {
     pretext.show();         
 }
 
-function exportPosition(latitude, longitude, zoom) {
+function exportPosition(position) {
  
     // Get the geolocation properties and set them as variables
-
+	latitude = position.coords.latitude;
+    longitude  = position.coords.longitude;
     
  	//Use the url to get the location a user manually puts in.
     // Insert the google maps iframe and change the location using the variables returned from the API
+    
+    mapOutput.html('<iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://maps.google.co.uk/?ie=UTF8&amp;ll='+latitude+','+longitude+'&amp;spn=0.332359,0.617294&amp;t=m&amp;z=11&amp;output=embed"></iframe>');
     //mapOutput.html('<iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://maps.google.co.uk/?ie=UTF8&amp;ll='+latitude+','+longitude+'&amp;spn=0.332359,0.617294&amp;t=m&amp;z='+zoom+'&amp;output=embed"></iframe>');
-    mapOutput.html('<img src="https://maps.googleapis.com/maps/api/staticmap?size=600x400&center='+latitude+','+longitude+'&zoom='+zoom+'&markers=color:yellow|'+latitude+','+longitude+'" />')
+    //mapOutput.html('<img src="https://maps.googleapis.com/maps/api/staticmap?size=600x400&center='+latitude+','+longitude+'&zoom='+zoom+'&markers=color:yellow|'+latitude+','+longitude+'" />')
 
 	//output long, lat, location
 
