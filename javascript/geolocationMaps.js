@@ -71,7 +71,7 @@ function exportPosition(position) {
     	locationZoom = 11;
     }
 	else{
-		locationLatitude = inputLattitude;
+		locationLatitude = inputLatitude;
 		locationLongitude = inputLongitude;
 		locationZoom = inputZoom;
 	}
@@ -86,7 +86,7 @@ function exportPosition(position) {
 	//output long, lat, location
 
 	divLongitude.html('Longitude: '+locationLongitude);
-	divLatitude.html('Lattitude: '+locationLatitude);
+	divLatitude.html('Latitude: '+locationLatitude);
     
     //Ajax function
     //Make a call to the Google maps api to get the name of the location
@@ -104,7 +104,7 @@ function exportPosition(position) {
     });
     //Clear Values
     $('#inputLongitude').val('');
-	$('#inputLattitude').val('');
+	$('#inputLatitude').val('');
 	$('#inputZoom').val('');
 	locationLatitude = 0;
 	inputLatitude = 0;
