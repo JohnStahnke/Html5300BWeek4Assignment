@@ -5,18 +5,20 @@
 //I saw this way of handling controls and jquery
 var button = jQuery('#submitText');
 
-//input divs
+//input variables
 var inputLongitude;
 var inputLattitude;
 var inputZoom;
 
+//I am using these to hold location data whether from gps/ip or manual input
 var locationLongitude;
 var locationLattitude;
+var locationZoom;
 
 //result divs
-var txtOutputLongitude = jQuery('.longitude');
-var txtOutputLattitude = jQuery('.lattitude');
-var txtOutputLocation = jQuery('.location');
+var divLongitude = jQuery('.longitude');
+var divLattitude = jQuery('.lattitude');
+var divLocation = jQuery('.location');
 var mapOutput = jQuery('#map');
 
 //check if a valid input
@@ -26,9 +28,9 @@ button.click(function(e){
 	
 	e.preventDefault();
 	//get values if they exist from input text boxes
-	inputLongitude = $('#txtLongitude').val();
-	inputLattitude = $('#txtLattitude').val();
-	inputZoom = $('#txtZoom').val();
+	inputLongitude = $('#inputLongitude').val();
+	inputLattitude = $('#inputLattitude').val();
+	inputZoom = $('#inputZoom').val();
 	
 
 	
@@ -38,10 +40,11 @@ button.click(function(e){
 		//do a check for manual or gps/ip lookup
 		if((numberRegex.test(inputLongitude))&& (numberRegex.test(inputLattitude))&&(numberRegex.test(inputZoom))){
 			
-			exportPosition(inputLongitude, inputLattitude, inputZoom);
+			exportPosition();
 		}
 		//Automatically look up using GPS or IP
 		else{
+			alert('Sorry either you did not input any values or one of them is not a valid number. Using GPS or IP Address');
 			//if no data in manual search then get location from gps or ip
 			navigator.geolocation.getCurrentPosition(exportPosition, errorPosition);
 			//can I get the lattitude and longitude and set to a position?
@@ -62,34 +65,54 @@ function errorPosition() {
 function exportPosition(position) {
  
     // Get the geolocation properties and set them as variables
-	latitude = position.coords.latitude;
-    longitude  = position.coords.longitude;
+    if(typeof position != 'undefined'){
+    	locationLattitude = position.coords.lattitude;
+    	locationLongitude  = position.coords.longitude;
+    	locationZoom = 11;
+    }
+	else{
+		locationLattitude = inputLattitude;
+		locationLongitude = inputLongitude;
+		locationZoom = inputZoom;
+	}
     
  	//Use the url to get the location a user manually puts in.
     // Insert the google maps iframe and change the location using the variables returned from the API
     
-    mapOutput.html('<iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://maps.google.co.uk/?ie=UTF8&amp;ll='+latitude+','+longitude+'&amp;spn=0.332359,0.617294&amp;t=m&amp;z=11&amp;output=embed"></iframe>');
-    //mapOutput.html('<iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://maps.google.co.uk/?ie=UTF8&amp;ll='+latitude+','+longitude+'&amp;spn=0.332359,0.617294&amp;t=m&amp;z='+zoom+'&amp;output=embed"></iframe>');
+    mapOutput.html('<iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://maps.google.co.uk/?ie=UTF8&amp;ll='+locationLattitude+','+locationLongitude+'&amp;spn=0.332359,0.617294&amp;t=m&amp;z='+locationZoom+'&amp;output=embed"></iframe>');
+    //mapOutput.html('<iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://maps.google.co.uk/?ie=UTF8&amp;ll='+latitude+','+longitude+'&amp;spn=0.332359,0.617294&amp;t=m&amp;z=11&amp;output=embed"></iframe>');
     //mapOutput.html('<img src="https://maps.googleapis.com/maps/api/staticmap?size=600x400&center='+latitude+','+longitude+'&zoom='+zoom+'&markers=color:yellow|'+latitude+','+longitude+'" />')
 
 	//output long, lat, location
 
-	txtOutputLongitude.html('Longitude: '+longitude);
-	txtOutputLattitude.html('Lattitude: '+lattitude);
+	divLongitude.html('Longitude: '+locationLongitude);
+	divLattitude.html('Lattitude: '+locationLattitude);
     
     //Ajax function
     //Make a call to the Google maps api to get the name of the location
     jQuery.ajax({
-      url: 'http://maps.googleapis.com/maps/api/geocode/json?latlng='+latitude+','+longitude+'&sensor=true',
+      url: 'http://maps.googleapis.com/maps/api/geocode/json?latlng='+locationLattitude+','+locationLongitude+'&sensor=true',
       type: 'POST',
       dataType: 'json',
       success: function(data) {
         //If Successful add the data to the 'location' div
-     	txtOutputLocation.html('Location: '+data.results[0].address_components[2].long_name);
+     	divLocation.html('Location: '+data.results[0].address_components[2].long_name);
       },
       error: function(xhr, textStatus, errorThrown) {
              errorPosition();
       }
     });
-     
+    //Clear Values
+    $('#inputLongitude').val('');
+	$('#inputLattitude').val('');
+	$('#inputZoom').val('');
+	locationLattitude = 0;
+	inputLattitude = 0;
+	locationLongitude = 0;
+	inputLongitude = 0;
+	locationZoom = 0;
+	inputZoom = 0;
+	
+	
+	
 }
