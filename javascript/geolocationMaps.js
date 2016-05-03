@@ -79,7 +79,7 @@ function exportPosition(position) {
  	//Use the url to get the location a user manually puts in.
     // Insert the google maps iframe and change the location using the variables returned from the API
     
-    mapOutput.html('<iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://maps.google.co.uk/?ie=UTF8&amp;ll='+locationLattitude+','+locationLongitude+'&amp;spn=0.332359,0.617294&amp;t=m&amp;z='+locationZoom+'&amp;output=embed"></iframe>');
+    mapOutput.html('<iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://maps.google.co.uk/?ie=UTF8&amp;ll='+locationLatitude+','+locationLongitude+'&amp;spn=0.332359,0.617294&amp;t=m&amp;z='+locationZoom+'&amp;output=embed"></iframe>');
     //mapOutput.html('<iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://maps.google.co.uk/?ie=UTF8&amp;ll='+latitude+','+longitude+'&amp;spn=0.332359,0.617294&amp;t=m&amp;z=11&amp;output=embed"></iframe>');
     //mapOutput.html('<img src="https://maps.googleapis.com/maps/api/staticmap?size=600x400&center='+latitude+','+longitude+'&zoom='+zoom+'&markers=color:yellow|'+latitude+','+longitude+'" />')
 
