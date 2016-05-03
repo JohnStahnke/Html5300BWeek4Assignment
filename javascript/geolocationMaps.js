@@ -86,12 +86,12 @@ function exportPosition(position) {
 	//output long, lat, location
 
 	divLongitude.html('Longitude: '+locationLongitude);
-	divLattitude.html('Lattitude: '+locationLattitude);
+	divLatitude.html('Lattitude: '+locationLatitude);
     
     //Ajax function
     //Make a call to the Google maps api to get the name of the location
     jQuery.ajax({
-      url: 'http://maps.googleapis.com/maps/api/geocode/json?latlng='+locationLattitude+','+locationLongitude+'&sensor=true',
+      url: 'http://maps.googleapis.com/maps/api/geocode/json?latlng='+locationLatitude+','+locationLongitude+'&sensor=true',
       type: 'POST',
       dataType: 'json',
       success: function(data) {
@@ -106,8 +106,8 @@ function exportPosition(position) {
     $('#inputLongitude').val('');
 	$('#inputLattitude').val('');
 	$('#inputZoom').val('');
-	locationLattitude = 0;
-	inputLattitude = 0;
+	locationLatitude = 0;
+	inputLatitude = 0;
 	locationLongitude = 0;
 	inputLongitude = 0;
 	locationZoom = 0;
