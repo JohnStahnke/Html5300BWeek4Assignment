@@ -7,17 +7,17 @@ var button = jQuery('#submitText');
 
 //input variables
 var inputLongitude;
-var inputLattitude;
+var inputLatitude;
 var inputZoom;
 
 //I am using these to hold location data whether from gps/ip or manual input
 var locationLongitude;
-var locationLattitude;
+var locationLatitude;
 var locationZoom;
 
 //result divs
 var divLongitude = jQuery('.longitude');
-var divLattitude = jQuery('.lattitude');
+var divLatitude = jQuery('.latitude');
 var divLocation = jQuery('.location');
 var mapOutput = jQuery('#map');
 
@@ -29,7 +29,7 @@ button.click(function(e){
 	e.preventDefault();
 	//get values if they exist from input text boxes
 	inputLongitude = $('#inputLongitude').val();
-	inputLattitude = $('#inputLattitude').val();
+	inputLatitude = $('#inputLatitude').val();
 	inputZoom = $('#inputZoom').val();
 	
 
@@ -38,7 +38,7 @@ button.click(function(e){
 	//if it does call foundLocation if not call nosuchLocation
 	if(navigator.geolocation){
 		//do a check for manual or gps/ip lookup
-		if((numberRegex.test(inputLongitude))&& (numberRegex.test(inputLattitude))&&(numberRegex.test(inputZoom))){
+		if((numberRegex.test(inputLongitude))&& (numberRegex.test(inputLatitude))&&(numberRegex.test(inputZoom))){
 			
 			exportPosition();
 		}
@@ -47,7 +47,7 @@ button.click(function(e){
 			alert('Sorry either you did not input any values or one of them is not a valid number. Using GPS or IP Address');
 			//if no data in manual search then get location from gps or ip
 			navigator.geolocation.getCurrentPosition(exportPosition, errorPosition);
-			//can I get the lattitude and longitude and set to a position?
+			//can I get the Latitude and longitude and set to a position?
 		}
 
 	}
@@ -66,12 +66,12 @@ function exportPosition(position) {
  
     // Get the geolocation properties and set them as variables
     if(typeof position != 'undefined'){
-    	locationLattitude = position.coords.lattitude;
+    	locationLatitude = position.coords.latitude;
     	locationLongitude  = position.coords.longitude;
     	locationZoom = 11;
     }
 	else{
-		locationLattitude = inputLattitude;
+		locationLatitude = inputLattitude;
 		locationLongitude = inputLongitude;
 		locationZoom = inputZoom;
 	}
