@@ -58,8 +58,7 @@ button.click(function(e){
 });
 
 function errorPosition() {                  
-    alert('Sorry couldn\'t find your location');                 
-    pretext.show();         
+    alert('Sorry couldn\'t find your location');                        
 }
 
 function exportPosition(position) {
